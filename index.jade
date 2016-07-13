@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  h1= AddQuestions
+  #AddQuestions
+  p Add New Questionnaire
+      div.question
+         a(href="/questions/new")!= "Add New Question"
