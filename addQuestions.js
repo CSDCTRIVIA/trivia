@@ -4,11 +4,12 @@ var Server = require('mongodb').Server;
 var BSON = require('mongodb').BSON;
 var ObjectID = require('mongodb').ObjectID;
 var mongoose = require('mongoose');
-var ddb = mongoose.connection;
+var ddb =
 
 qProvider = function(host, port) {
     this.db= new Db('QuestionsDB', new Server(host, port, {safe: false}, {auto_reconnect: true}, {}));
     this.db.open(function(){});
+    console.log("MongoDB Connect:" +host + ":" +port);
 };
 
 
