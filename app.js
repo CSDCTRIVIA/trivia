@@ -29,15 +29,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
-// catch 404 and forward to error handler
-//app.use(function(req, res, next) {
-//  var err = new Error('Not Found');
-//  err.status = 404;
-//  next(err);/
-//});
-
-// error handlers
-
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
@@ -70,25 +61,37 @@ app.get('/', function(req, res){
 });
 
 app.get('/questions/new', function(req, res) {
-  res.render('newQuestion', {
+  res.render('latestQA', {
     title: 'New Question'
   });
 });
 
 //save new employee
 app.post('/questions/new',function(req,res){
+    console.log("KAMLESH" +req.param('QuestionText'));
   questprovider.Save({
-    Description: req.param('description'),
-    Weightage:   req.param('weightage'),
-    Category:    req.param('Category'),
-    Type:        req.param('Type'),
-    Option1:     req.param('Answer1'),
-    Option2:     req.param('Answer2'),
-    Option3:     req.param('Answer3'),
-    Option4:     req.param('Answer4')
-  })
-})
+    Description: req.param('QuestionText'),
+    Weightage:   req.param('AnswerWeightage'),
+    Category:    req.param('QuestionCategory'),
+    QuestionType: req.param('QuestionType'),
+    QuestionMIMEType: req.param('QuestionMIMEType'),
+    QuestionClassification: req.param('QuestionClassification'),
+    QuestionScope: req.param('QuestionScope'),
+    QuestionActivationStatus:req.param('QuestionActivationStatus'),
+    Option1:     req.param('QuestionOption1'),
+    Option2:     req.param('QuestionOption2'),
+    Option3:     req.param('QuestionOption3'),
+    Option4:     req.param('QuestionOption4'),
+    AnswerText: req.param('AnswerText'),
+    FileAttached:req.param('fileAttach')
+  });
+});
 
 
-app.listen(1500);
+app.listen(7000);
 module.exports = app;
+
+
+
+
+
