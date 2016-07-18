@@ -104,11 +104,10 @@ value='Inactive')
           input#AText(type='text', name='AnswerText', value=' ')
           br
           |         Answer Weightage :
-          input#AWeightage(type='text', name='AnswerWeightage', value=' ')
+          input#AWeightage(type='number', name='AnswerWeightage', value=' ')
           br
           |         Multimedia Attachment :
-          input#QMMAttachment(type='file', name='QuestionMMAttachment')
-          input(type='submit', id="fileAttach" name="fileAttach" value='Upload')
+          input(type='file', id="fileAttach" name="fileAttach" value='Upload')
           br
           br
           input(type='submit', id="addDB" value="Add" onclick="insertQDB()")
