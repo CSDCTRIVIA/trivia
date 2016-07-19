@@ -38,19 +38,19 @@ html
           |         Question Type :
           select#QType(name='QuestionType')
             option(value='Yes/No') Yes / No
-            option(value='Text') Text
+            option(value='Text' ) Text
             option(value='Multiple Choice') Multiple Choice
           br
           |         Question MIME Type :
           select#QMIMEType(name='QuestionMIMEType')
-            option(value='Text') Text
+            option(value='Text' ) Text
             option(value='Image') Image
             option(value='Audio') Audio
             option(value='Video') Video
           br
           |         Question Category :
           select#QCategory(name='QuestionCategory')
-            option(value='Science') Science
+            option(value='Science' ) Science
             option(value='Sports') Sports
             option(value='Wildlife') Wildlife
             option(value='Business') Business
@@ -63,7 +63,7 @@ html
           |         Question Classification :
           input#QClassification(type='radio',
 name='QuestionClassification', onclick='check(this.value)',
-value='Weighted')
+value='Weighted' checked)
           | Weighted
           input#QClassification(type='radio',
 name='QuestionClassification', onclick='check(this.value)',
@@ -72,16 +72,16 @@ value='Unweighted')
           br
           |         Question Scope :
           input#QScope(type='radio', name='QuestionScope',
-onclick='check(this.value)', value='Privat')
+onclick='check(this.value)', value='Privat' )
           | Private
           input#QScope(type='radio', name='QuestionScope',
-onclick='check(this.value)', value='Public')
+onclick='check(this.value)', value='Public' checked)
           | Public
           br
           |         Question Activation Status :
           input#QActStatus(type='radio',
 name='QuestionActivationStatus', onclick='check(this.value)',
-value='Active')
+value='Active' checked)
           | Active
           input#QActStatus(type='radio',
 name='QuestionActivationStatus', onclick='check(this.value)',
