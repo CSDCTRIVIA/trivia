@@ -6,10 +6,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var addQuestion = require('./addQuestions');
 var insQ = require('./addQuestions');
-
+var mime = require('mime');
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
+var fs = require('fs');
 var app = express();
 var questprovider = new qProvider('localhost',27017);
 
@@ -68,8 +68,61 @@ app.get('/questions/new', function(req, res) {
 
 //save new employee
 app.post('/questions/new',function(req,res){
-    console.log("KAMLESH" +req.param('QuestionText'));
-  questprovider.Save({
+    var filebrowse = req.param('fileAttach');
+    var fileSije = [];
+    console.log("GG:" +filebrowse);
+    console.log("G1:" +mime.lookup(filebrowse).toString());
+    if(mime.lookup(filebrowse).toString() == 'image/jpeg')
+    {
+        fs.stat(filebrowse,function(err,stats){
+            if(err){
+                console.log(err);
+            }
+            fileSije.push(stats['size']);
+            console.log("Image File Size:" +stats['size']);
+            questprovider.Save({
+                FileType: mime.lookup(filebrowse).toString(),
+                FileName: req.param('fileAttach'),
+                FileSize:fileSije
+            });
+        });
+    }
+    if(mime.lookup(filebrowse).toString() == 'audio/mpeg')
+    {
+        fs.stat(filebrowse,function(err,stats){
+            if(err){
+                console.log(err);
+            }
+            console.log("Audio File Size:"  +stats["size"]);
+            fileSije.push(stats['size']);
+            questprovider.Save({
+                FileType: mime.lookup(filebrowse).toString(),
+                FileName: req.param('fileAttach'),
+                FileSize:fileSije
+            });
+        });
+    }
+    if(mime.lookup(filebrowse).toString() == 'video/x-ms-wmv')
+    {
+          fs.stat(filebrowse,function(err,stats){
+            if(err){
+                console.log(err);
+            }
+            console.log("Video File Size:" +stats["size"]);
+            fileSije.push(stats['size']);
+            questprovider.Save({
+                FileType: mime.lookup(filebrowse).toString(),
+                FileName: req.param('fileAttach'),
+                FileSize:fileSije
+            });
+        });
+    }
+    else
+    {
+        console.log("Not Needed");
+    }
+   
+    questprovider.Save({
     Description: req.param('QuestionText'),
     Weightage:   req.param('AnswerWeightage'),
     Category:    req.param('QuestionCategory'),
@@ -83,7 +136,7 @@ app.post('/questions/new',function(req,res){
     Option3:     req.param('QuestionOption3'),
     Option4:     req.param('QuestionOption4'),
     AnswerText: req.param('AnswerText'),
-    FileAttached:req.param('fileAttach')
+  
   });
 });
 
