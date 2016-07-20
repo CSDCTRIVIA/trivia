@@ -12,6 +12,7 @@ var users = require('./routes/users');
 var fs = require('fs');
 var app = express();
 var questprovider = new qProvider('localhost',27017);
+var getFiles = new fileProvider('localhost', 27017);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -74,46 +75,55 @@ app.post('/questions/new',function(req,res){
     console.log("G1:" +mime.lookup(filebrowse).toString());
     if(mime.lookup(filebrowse).toString() == 'image/jpeg')
     {
+        var fileContent = fs.readFileSync(filebrowse,'base64');
+        console.log("content:" +fileContent);
         fs.stat(filebrowse,function(err,stats){
             if(err){
                 console.log(err);
             }
             fileSije.push(stats['size']);
             console.log("Image File Size:" +stats['size']);
-            questprovider.Save({
+            getFiles.Save({
                 FileType: mime.lookup(filebrowse).toString(),
                 FileName: req.param('fileAttach'),
-                FileSize:fileSije
+                FileSize:fileSije,
+                FileBuffer:fileContent
             });
         });
     }
     if(mime.lookup(filebrowse).toString() == 'audio/mpeg')
     {
+        var fileContent = fs.readFileSync(filebrowse,'base64');
+         console.log("content:" +fileContent);
         fs.stat(filebrowse,function(err,stats){
             if(err){
                 console.log(err);
             }
             console.log("Audio File Size:"  +stats["size"]);
             fileSije.push(stats['size']);
-            questprovider.Save({
+            getFiles.Save({
                 FileType: mime.lookup(filebrowse).toString(),
                 FileName: req.param('fileAttach'),
-                FileSize:fileSije
+                FileSize:fileSije,
+                FileBuffer:fileContent
             });
         });
     }
     if(mime.lookup(filebrowse).toString() == 'video/x-ms-wmv')
     {
+          var fileContent = fs.readFileSync(filebrowse,'base64');
+           console.log("content:" +fileContent);
           fs.stat(filebrowse,function(err,stats){
             if(err){
                 console.log(err);
             }
             console.log("Video File Size:" +stats["size"]);
             fileSije.push(stats['size']);
-            questprovider.Save({
+            getFiles.Save({
                 FileType: mime.lookup(filebrowse).toString(),
                 FileName: req.param('fileAttach'),
-                FileSize:fileSije
+                FileSize:fileSije,
+                FileBuffer:fileContent
             });
         });
     }
