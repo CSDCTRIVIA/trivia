@@ -12,6 +12,12 @@ qProvider = function(host, port) {
     console.log("MongoDB Connect:" +host + ":" +port);
 };
 
+fileProvider = function(host, port) {
+    this.db= new Db('QuestionsDB', new Server(host, port, {safe: false}, {auto_reconnect: true}, {}));
+    this.db.open(function(){});
+    console.log("MongoDB Connect:" +host + ":" +port);
+};
+
 
 
 var fileattach = new mongoose.Schema({
@@ -41,6 +47,13 @@ function insertQDB(e)
 //Get the collection Question
 qProvider.prototype.getCollection= function(callback) {
     this.db.collection('QuestDB', function(error, DBquestions) {
+        if( error ) callback(error);
+        else callback(null, DBquestions);
+    });
+};
+
+fileProvider.prototype.getCollection= function(callback) {
+    this.db.collection('FilesDB', function(error, DBquestions) {
         if( error ) callback(error);
         else callback(null, DBquestions);
     });
@@ -80,5 +93,50 @@ qProvider.prototype.Save = function(questions,callback){
     })
 };
 
+fileProvider.prototype.Save = function(questions,callback){
+    this.getCollection(function(error,DBquestions){
+        if(error) {
+            console.log(error);
+        }
+        else {
+            if( typeof(questions.length)=="undefined")
+                questionx = [questions];
+
+            for( var i =0;i< questionx.length;i++ ) {
+                question = questionx[i];console.log("rt" +questionx[i]);
+                question.created_at = new Date();
+            }
+            DBquestions.insert(questions,function(){
+                console.log("Inserted Success");
+            });
+        }
+    })
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 module.exports = {insertQDB:insertQDB}
 module.exports = {qProvider:qProvider}
+module.exports = {fileProvider:fileProvider}
