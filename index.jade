@@ -3,6 +3,11 @@ extends layout
 block content
   h1= AddQuestions
   #AddQuestions
-  p Add New Questionnaire
+  h1 WELCOME TO TRIVA
       div.question
-         a(href="/questions/new")!= "Add New Question"
+         h2 INTERESTED
+         br
+         br
+         br
+         input(type="submit" style="width:300px;height=40px" name="button1" Value="Enter" onclick="location.href='/questions/new'")
+         input(type="submit" style="width:300px;height=40px" name="button1" Value="Exit" )
