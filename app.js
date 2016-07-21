@@ -67,6 +67,16 @@ app.get('/questions/new', function(req, res) {
   });
 });
 
+app.get('/exitformalities', function(req, res) {
+  res.render('exitformalities', {
+    title: 'THANKS FOR STOPPING BY'
+  });
+});
+
+
+
+
+
 //save new employee
 app.post('/questions/new',function(req,res){
     var filebrowse = req.param('fileAttach');
